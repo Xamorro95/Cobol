@@ -1,14 +1,20 @@
-********************************************************INDICE************************************************
+**********************************************************INDICE****************************************************
       0.-SENTENCIAS
           0.1.- MOVE
           0.2.- ACCEPT
           0.3.- DISPLAY
+          0.4.- INITIALIZE
+          0.5.- ADD
           
           
-**************************************************SENTENCIAS***************************************************
+*********************************************************SENTENCIAS***************************************************
 
-0.1.-MOVE     --> Mueve el contenido de una variable a otra (MOVE campo_1 TO campo_2)
+0.1.-MOVE         --> Mueve el contenido de una variable a otra (MOVE variable_1 TO variable_2)
 
-0.2.-ACCEPT   --> Para sacar la fecha del sistema (ACCEPT variable_1 FROM DATE YYYYMMDD.)
+0.2.-ACCEPT       -->   0.2.0.- DATE      --> Para sacar la fecha del sistema (ACCEPT variable_1 FROM DATE [YYYYMMDD])
 
-0.3.-DISPLAY  --> Muestra por pantalla la sentencia indicada (DISPLAY datos)
+0.3.-DISPLAY      --> Muestra por pantalla la sentencia indicada (DISPLAY variable_)
+
+0.4.- INITIALIZE  --> Inicia las variables que le indiquemos (INITIALIZE variable_1)
+
+0.5.- ADD         --> Suma el contenido de las variables (ADD variable_1 TO variable_2 [GIVING variable_3])
