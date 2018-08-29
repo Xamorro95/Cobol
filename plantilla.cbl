@@ -14,27 +14,18 @@
        ENVIRONMENT DIVISION.                                            
       *
        CONFIGURATION SECTION.                                           
-
+      *
        INPUT-OUTPUT SECTION.                                            
-
-       FILE-CONTROL.                                                    
-
-                                                                                  
-
+      *
+       FILE-CONTROL.                                                                                                                               
+      *
       ***************************************************************** 
-
       * DATA DIVISION                                                 * 
-
       ***************************************************************** 
-
-       DATA DIVISION.                                                   
-
-                                                                         
-
+      *
+       DATA DIVISION.                                                                                                                           
        FILE SECTION.                                                    
-
-                                                                                  
-
+      *                                                                         
       ***************************************************************** 
 
       * WORKING STORAGE SECTION                                       * 
