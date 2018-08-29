@@ -1,0 +1,14 @@
+********************************************************INDICE************************************************
+      0.-SENTENCIAS
+          0.1.- MOVE
+          0.2.- ACCEPT
+          0.3.- DISPLAY
+          
+          
+**************************************************SENTENCIAS***************************************************
+
+0.1.-MOVE     --> Mueve el contenido de una variable a otra (MOVE campo_1 TO campo_2)
+
+0.2.-ACCEPT   --> Para sacar la fecha del sistema (ACCEPT variable_1 FROM DATE YYYYMMDD.)
+
+0.3.-DISPLAY  --> Muestra por pantalla la sentencia indicada (DISPLAY datos)
