@@ -5,6 +5,8 @@
           0.3.- DISPLAY
           0.4.- INITIALIZE
           0.5.- ADD
+          0.6.- DIVIDE
+          0.7.- IF
           
           
 *********************************************************SENTENCIAS***************************************************
@@ -18,3 +20,7 @@
 0.4.- INITIALIZE  --> Inicia las variables que le indiquemos (INITIALIZE variable_1)
 
 0.5.- ADD         --> Suma el contenido de las variables (ADD variable_1 TO variable_2 [GIVING variable_3])
+
+0.6.- DIVIDE      --> Divide las variables elegidas (DIVIDE variable_1 BY variable_2 [GIVING variable_3 [REMAINDER variable_4]]
+
+0.7.- IF          --> Genera un condifional (IF condicion sentencias_1 [ELSE sentencias_2] END-IF
