@@ -1,4 +1,4 @@
-      *****************************************************************
+*****************************************************************
       *                                                               *
       * PROGRAMA DE XXXXXXXXXXXXXXXX                                  *
       *                                                               *
@@ -16,7 +16,13 @@
        INPUT-OUTPUT SECTION.
        FILE-CONTROL.
            SELECT FICHERO
-             ASSIGN TO "/home/forma2/cobol/ficheros/fichero.empleado"
+           ASSIGN TO
+      *    "/home/forma2/cobol/ficheros/fichero.empleado"
+      *    "/home/forma2/cobol/ficheros/fichero.empleado.correcto"
+      *    "/home/forma2/cobol/ficheros/fichero.empleado.cruce"
+      *    "/home/forma2/cobol/ficheros/fichero.empleado.cruce.uno"
+      *    "/home/forma2/cobol/ficheros/fichero.empleado.cruce.vacio"
+      *    "/home/forma2/cobol/ficheros/fichero.empleado.cruce.raro"
              FILE STATUS IS WS-FILE-STATUS.
       *****************************************************************
       * DATA DIVISION                                                 *
@@ -50,7 +56,7 @@
            05 WC-CONTADOR2                       PIC 9(2).
            05 WC-CONTADOR3                       PIC 9(2).
            05 WC-CONTADOR4                       PIC 9(2).
-           
+
       ***************************************************************** *
       **              VARIABLES  FICHERO SALIDA                       * *
       ***************************************************************** *
@@ -71,6 +77,7 @@
       ***************************************************************** *
        01  WS-VARIABLES.
            05  WS-FILE-STATUS                       PIC XX.
+           05  SW-ERROR                             PIC 9 VALUE "0".
       ***************************************************************** *
       **              PROCEDURE  DIVISION.                            * *
       ***************************************************************** *
@@ -91,19 +98,19 @@
       ***************************************************************** *
        1000-INICIO.
            INITIALIZE WS-CONTADORES.
-      *     
+      *
            OPEN INPUT FICHERO.
-      *     
+      *
+           READ FICHERO RECORD INTO WS-REG-EMPLEADO
+              AT END SET FIN-FICHERO TO TRUE.
+      *        
            IF WS-FILE-STATUS = 00
-               CONTINUE  
-           ELSE  
+               CONTINUE
+           ELSE
                 PERFORM 9100-ERRORES
                 THRU 9100-ERRORES-EXIT
            END-IF.
       *
-           READ FICHERO RECORD INTO WS-REG-EMPLEADO
-              AT END SET FIN-FICHERO TO TRUE.
-      * 
        1000-INICIO-EXIT.
        EXIT.
       *
@@ -111,16 +118,16 @@
       * PROCESO                                           *
       *****************************************************
        3000-PROCESO.
-           DISPLAY "COD.EMPLE: " WS-EMPLE-CODIGO "  NOMBRE: " 
+           DISPLAY "COD.EMPLE: " WS-EMPLE-CODIGO "  NOMBRE: "
                 WS-EMPLE-NOMBRE.
-      *               
+      *
            IF WS-FILE-STATUS = 00
-                 CONTINUE                 
-           ELSE  
+                 CONTINUE
+           ELSE
                 PERFORM 9100-ERRORES
                 THRU 9100-ERRORES-EXIT
-           END-IF. 
-      *             
+           END-IF.
+      *
            EVALUATE TRUE
                WHEN WS-EMPLE-DEPT(1:1) = "A"
                    ADD 1 TO WC-CONTADOR1
@@ -129,12 +136,12 @@
                WHEN WS-EMPLE-DEPT(1:1) = "D"
                    ADD 1 TO WC-CONTADOR3
                WHEN OTHER
-                   ADD 1 TO WC-CONTADOR4             
+                   ADD 1 TO WC-CONTADOR4
            END-EVALUATE.
       *
            READ FICHERO RECORD INTO WS-REG-EMPLEADO
               AT END SET FIN-FICHERO TO TRUE.
-           ADD 1 TO WC-CONTADOR.      
+           ADD 1 TO WC-CONTADOR.
       *
        3000-PROCESO-EXIT.
        EXIT.
@@ -143,28 +150,43 @@
       * FIN                                               *
       *****************************************************
        8000-FIN.
+           IF SW-ERROR = "0"
+                 DISPLAY "******************************************"
+                 DISPLAY "**FILAS LEIDAS:      " WC-CONTADOR
+                 DISPLAY "******************************************"
+                 DISPLAY "**EMPIEZAN POR A:    " WC-CONTADOR1
+                 DISPLAY "******************************************"
+                 DISPLAY "**EMPIEZAN POR B:    " WC-CONTADOR2
+                 DISPLAY "******************************************"
+                 DISPLAY "**EMPIEZAN POR C:    " WC-CONTADOR3
+                 DISPLAY "******************************************"
+                 DISPLAY "**EMPIEZAN POR OTRO: " WC-CONTADOR4
+                 DISPLAY "******************************************"
+           END-IF.
+      *
            CLOSE FICHERO.
-           DISPLAY "******************************************"
-           DISPLAY "******************************************"
-           DISPLAY "**FILAS LEIDAS:      " WC-CONTADOR
-           DISPLAY "******************************************"
-           DISPLAY "**EMPIEZAN POR A:    " WC-CONTADOR1
-           DISPLAY "******************************************"
-           DISPLAY "**EMPIEZAN POR B:    " WC-CONTADOR2
-           DISPLAY "******************************************"
-           DISPLAY "**EMPIEZAN POR C:    " WC-CONTADOR3
-           DISPLAY "******************************************"
-           DISPLAY "**EMPIEZAN POR OTRO: " WC-CONTADOR4
-           DISPLAY "******************************************"
            STOP RUN.
        8000-FIN-EXIT.
        EXIT.
-      *      
+      *
        9100-ERRORES.
+           MOVE 1 TO SW-ERROR.
+      *     
+           DISPLAY "************************************"
+           DISPLAY "************************************"
+           EVALUATE WS-FILE-STATUS
+                WHEN 10
+                     DISPLAY "EL FICHERO ESTA VACIO"
+                 WHEN OTHER
+                     DISPLAY "SE HA PRODUCIDO UN ERROR"
+           END-EVALUATE.
+      * 
            DISPLAY "*********************************"
            DISPLAY "**FILE STATUS: " WS-FILE-STATUS
            DISPLAY "*********************************"
+      *
            PERFORM 8000-FIN
               THRU 8000-FIN-EXIT.
+      *
        9100-ERRORES-EXIT.
        EXIT.
