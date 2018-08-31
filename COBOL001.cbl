@@ -1,11 +1,13 @@
       *****************************************************************
       *                                                               *
-      *              PROGRAMA DE XXXXXXXXXXXXXXXX                     *
+      *       PROGRAMA DE MIGUEL ANTONIO CHAMORRO MARTINEZ            *
       *                                                               *
-      *          ESTE PROGRAMA GENERA XXXXXXXXXXXXXXXXX               *
+      *          ESTE PROGRAMA CARGGA UN ARCHIVO Y REALIZAMOS         *
+      *           OPERACIONES SOBRE DICHO FICHERO                     *
       *****************************************************************
        IDENTIFICATION DIVISION.
        PROGRAM-ID.    COBOL003.
+       AUTHOR MIGUEL-CHAMORRO.
       *
       *****************************************************************
       *                  ENVIROMENT DIVISION                          *
@@ -18,10 +20,10 @@
            SELECT FICHERO
            ASSIGN TO
       *    "/home/forma2/cobol/ficheros/fichero.empleado"
-           "/home/forma2/cobol/ficheros/fichero.empleado.correcto"
+      *     "/home/forma2/cobol/ficheros/fichero.empleado.correcto"
       *    "/home/forma2/cobol/ficheros/fichero.empleado.cruce"
       *    "/home/forma2/cobol/ficheros/fichero.empleado.cruce.uno"
-      *     "/home/forma2/cobol/ficheros/fichero.empleado.cruce.vacio"
+           "/home/forma2/cobol/ficheros/fichero.empleado.cruce.vacio"
       *    "/home/forma2/cobol/ficheros/fichero.empleado.cruce.raro"
              FILE STATUS IS WS-FILE-STATUS.
       *
@@ -105,19 +107,30 @@
       *               INICIO                                          *
       *****************************************************************
        1000-INICIO.
+      *INICIALIZAMOS LAS VARIABLES NECESARIAS
            INITIALIZE WS-CONTADORES.
       *
            OPEN INPUT FICHERO.
-      *
            MOVE LT-FICHERO TO WS-FICHERO-ERROR.
+      *
+      *SI SE PRODUCE UN ERROR AL ABIR EL FICHERO NO SIGUE EJECUTANDOSE
+           IF WS-FILE-STATUS NOT = 00
+                MOVE 1000 TO WS-PARRAFO-ERROR
+                MOVE LT-OPEN TO WS-OPERACION-ERROR
+                PERFORM 9100-ERRORES
+                THRU 9100-ERRORES-EXIT
+           END-IF.
+      *                
            READ FICHERO RECORD INTO WS-REG-EMPLEADO
               AT END SET FIN-FICHERO TO TRUE.
       *        
-      *SI SE PRODUCE UN ERROR LLAMA AL PARRAFO DE ERRORES        
+      *SI SE PRODUCE UN ERROR AL LEEREL PRIMER REGISTRO
+      *NO SIGUE EJECUTANDOSE        
            IF WS-FILE-STATUS = 00
                CONTINUE
            ELSE
                 MOVE 1000 TO WS-PARRAFO-ERROR
+                MOVE LT-READ TO WS-OPERACION-ERROR
                 PERFORM 9100-ERRORES
                 THRU 9100-ERRORES-EXIT
            END-IF.
@@ -177,9 +190,12 @@
                  DISPLAY "******************************************"
                  DISPLAY "**EMPIEZAN POR OTRO: " WC-CONTADOR4
                  DISPLAY "******************************************"
+                 
            END-IF.
       *
            CLOSE FICHERO.
+           DISPLAY "FICHERO CERRADO".
+           DISPLAY "FILE.STATUS: " WS-FILE-STATUS.
            STOP RUN.
       *
        8000-FIN-EXIT.
@@ -190,29 +206,33 @@
        9100-ERRORES.
            SET SI-ERROR TO TRUE.
       *     
-           DISPLAY "************************************"
-           DISPLAY "          E R R O R       "
-           DISPLAY "************************************"
-           DISPLAY "************************************"
+           DISPLAY "************************************".
+           DISPLAY "          E R R O R       ".
+           DISPLAY "************************************".
+           DISPLAY "************************************".
       *
       *EVALUAMOS EL TIPO DE ERROR Y LO MOSTRAMOS POR PANTALLA 
            EVALUATE WS-FILE-STATUS
+                WHEN 04
+                      DISPLAY "SE HA PRODUCIDO UN DESBORDAMIENTO"
                 WHEN 10
                      DISPLAY "EL FICHERO ESTA VACIO"
-                 WHEN OTHER
+                WHEN 35
+                     DISPLAY "NO SE ENCUENTRA EL FICHERO"
+                WHEN OTHER
                      DISPLAY "SE HA PRODUCIDO UN ERROR"
            END-EVALUATE.
       * 
-           DISPLAY "*********************************"
-           DISPLAY "*********************************"
-           DISPLAY "ANALISIS DE ERROR: "
-           DISPLAY "*********************************"
-           DISPLAY "****FILE STATUS: " WS-FILE-STATUS
-           DISPLAY "****FICHERO:     " WS-FICHERO-ERROR
-           DISPLAY "****PARRAFO:     " WS-PARRAFO-ERROR
-           DISPLAY "****LINEA:       " WC-CONTADOR
-           DISPLAY "****OPERACION:   " WS-OPERACION-ERROR
-           DISPLAY "*********************************"
+           DISPLAY "*********************************".
+           DISPLAY "*********************************".
+           DISPLAY "ANALISIS DE ERROR: ".
+           DISPLAY "*********************************".
+           DISPLAY "****FILE STATUS: " WS-FILE-STATUS.
+           DISPLAY "****FICHERO:     " WS-FICHERO-ERROR.
+           DISPLAY "****PARRAFO:     " WS-PARRAFO-ERROR.
+           DISPLAY "****LINEA:       " WC-CONTADOR.
+           DISPLAY "****OPERACION:   " WS-OPERACION-ERROR.
+           DISPLAY "*********************************".
       *
            PERFORM 8000-FIN
               THRU 8000-FIN-EXIT.
