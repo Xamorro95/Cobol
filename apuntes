@@ -11,8 +11,11 @@
           0.9.-  OPEN
           0.10.- CLOSE
           0.11.- SET
-          
-          
+          0.12.- READ
+          0.13.- WRITE
+          0.14.- SUBTRACT
+          0.15.- MULTIPLY
+                  
           
 *********************************************************SENTENCIAS***************************************************
 
@@ -29,15 +32,21 @@
                       INITIALIZE variable_1
 
 0.5.- ADD         --> Suma el contenido de las variables.
+                      GIVING --> Guarda el contenido en otra variable.
                       ADD variable_1 TO variable_2 [GIVING variable_3]
 
 0.6.- DIVIDE      --> Divide el contenido de las variables elegidas. 
+                      GIVING --> Almacena el resultado en otra variable
+                      REMAINDER --> Almacena el resto en otra variable, obligatorio uso de GIVING.
                       DIVIDE variable_1 BY variable_2 [GIVING variable_3 [REMAINDER variable_4]]
 
 0.7.- IF          --> Genera un condicional.
                       IF condicion sentencias_1 [ELSE sentencias_2] END-IF
 
-0.8.- EVALUATE    --> 
+0.8.- EVALUATE    --> Evalua la condicion de una o varias variables y ejecuta diferentes acciones.
+                      EVALUATE TRUE WHEN condicion_1 sentencias_1 [WHEN OTHER condicion_1 sentencias_1] END-EVALUATE
+                      EVALUATE variable WHEN
+                      
 
 0.9.-  OPEN       --> Abre un fichero para lectura o escritura. 
                       OPEN {INPUT/OUTPUT} fichero
@@ -47,3 +56,22 @@
 
 0.11.- SET        --> Cambiamos un switch a true, en cuanto una adopta la condicion de true, el resto se convierten en false.
                       SET condicion TO TRUE
+                     
+0.12.- READ       --> Lee cada uno de los registros de un fichero, solo uno por vez.
+                      INTO --> Guardamos la informacion en la estructura creada anteriormente.
+                      AT END --> Generamos una condicion al finalizar de leer el registro.
+                      READ nombre_fichero INTO estructura [AT END condicion] END-READ
+
+0.13.- WRITE      --> Nos permite escribir en un fichero (previamente abirto mediante OUTPUT).
+                      FROM --> variable 01 de la estructura.
+                      AFTER ADVANCING n LINES --> Al escribir salta de linea (Necesario en Linux).
+                      AFTER ADVANCING PAGE --> Salta de pagina.
+                      WRITE 01_fd FROM 01_estructura [AFTER ADVANCING n LINES] [ AFTER ADVANCING PAGE]
+                                         
+0.14.- SUBTRACT   --> Resta el contenido de una variable o campo
+                      GIVING --> Almacena el contenido en otra variable
+                      SUBTRACT variable_1 FROM variable_2 [GIVING variable_3]
+                      
+0.15.- MULTIPLY   --> Multiplica el contenido de dos variables o campo
+                      GIVING --> Almacena el contenido en otra variable
+                      MULTIPLY variable_1 BY variable_2 GIVING variable_3
