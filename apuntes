@@ -15,6 +15,7 @@
           0.13.- WRITE
           0.14.- SUBTRACT
           0.15.- MULTIPLY
+          0.16.- COMPUTE
                   
           
 *********************************************************SENTENCIAS***************************************************
@@ -45,8 +46,7 @@
 
 0.8.- EVALUATE    --> Evalua la condicion de una o varias variables y ejecuta diferentes acciones.
                       EVALUATE TRUE WHEN condicion_1 sentencias_1 [WHEN OTHER condicion_1 sentencias_1] END-EVALUATE
-                      EVALUATE variable WHEN
-                      
+                      EVALUATE variable WHEN valor_1 sentencias_1 [WHEN OTHER valor_2 condicion_2] END-EVALUATE                   
 
 0.9.-  OPEN       --> Abre un fichero para lectura o escritura. 
                       OPEN {INPUT/OUTPUT} fichero
@@ -75,3 +75,7 @@
 0.15.- MULTIPLY   --> Multiplica el contenido de dos variables o campo
                       GIVING --> Almacena el contenido en otra variable
                       MULTIPLY variable_1 BY variable_2 GIVING variable_3
+                   
+0.16.- COMPUTE    --> Permite realizar variables operaciones a la vez, recomendado uso de parentesis
+                      Operadores --> +,-,*,/,** (exponencial)
+                      COMPUTE campo_1 = campo_2 - campo_3 + campo_4...
