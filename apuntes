@@ -1,26 +1,49 @@
 **********************************************************INDICE****************************************************
       0.-SENTENCIAS
-          0.1.- MOVE
-          0.2.- ACCEPT
-          0.3.- DISPLAY
-          0.4.- INITIALIZE
-          0.5.- ADD
-          0.6.- DIVIDE
-          0.7.- IF
+          0.1.-  MOVE
+          0.2.-  ACCEPT
+          0.3.-  DISPLAY
+          0.4.-  INITIALIZE
+          0.5.-  ADD
+          0.6.-  DIVIDE
+          0.7.-  IF
+          0.8.-  EVALUATE
+          0.9.-  OPEN
+          0.10.- CLOSE
+          0.11.- SET
+          
           
           
 *********************************************************SENTENCIAS***************************************************
 
-0.1.-MOVE         --> Mueve el contenido de una variable a otra (MOVE variable_1 TO variable_2)
+0.1.-MOVE         --> Mueve el contenido de una variable a otra.
+                      MOVE variable_1 TO variable_2
 
-0.2.-ACCEPT       -->   0.2.0.- DATE      --> Para sacar la fecha del sistema (ACCEPT variable_1 FROM DATE [YYYYMMDD])
+0.2.-ACCEPT       -->   0.2.0.- DATE      --> Para sacar la fecha del sistema. 
+                                              ACCEPT variable_1 FROM DATE [YYYYMMDD]
 
-0.3.-DISPLAY      --> Muestra por pantalla la sentencia indicada (DISPLAY variable_)
+0.3.-DISPLAY      --> Muestra por pantalla la sentencia indicada.
+                      DISPLAY variable_1
 
-0.4.- INITIALIZE  --> Inicia las variables que le indiquemos (INITIALIZE variable_1)
+0.4.- INITIALIZE  --> Inicia las variables que le indiquemos.
+                      INITIALIZE variable_1
 
-0.5.- ADD         --> Suma el contenido de las variables (ADD variable_1 TO variable_2 [GIVING variable_3])
+0.5.- ADD         --> Suma el contenido de las variables.
+                      ADD variable_1 TO variable_2 [GIVING variable_3]
 
-0.6.- DIVIDE      --> Divide las variables elegidas (DIVIDE variable_1 BY variable_2 [GIVING variable_3 [REMAINDER variable_4]]
+0.6.- DIVIDE      --> Divide el contenido de las variables elegidas. 
+                      DIVIDE variable_1 BY variable_2 [GIVING variable_3 [REMAINDER variable_4]]
 
-0.7.- IF          --> Genera un condifional (IF condicion sentencias_1 [ELSE sentencias_2] END-IF
+0.7.- IF          --> Genera un condicional.
+                      IF condicion sentencias_1 [ELSE sentencias_2] END-IF
+
+0.8.- EVALUATE    --> 
+
+0.9.-  OPEN       --> Abre un fichero para lectura o escritura. 
+                      OPEN {INPUT/OUTPUT} fichero
+
+0.10.- CLOSE      --> Sirve para cerrar fichero, se pueden cerrar varios a la vez.
+                      CLOSE fichero
+
+0.11.- SET        --> Cambiamos un switch a true, en cuanto una adopta la condicion de true, el resto se convierten en false.
+                      SET condicion TO TRUE
