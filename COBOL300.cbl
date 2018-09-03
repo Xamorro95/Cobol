@@ -2,11 +2,11 @@
       *                                                               *
       *       PROGRAMA DE MIGUEL ANTONIO CHAMORRO MARTINEZ            *
       *                                                               *
-      *          ESTE PROGRAMA CARGGA UN ARCHIVO Y REALIZAMOS         *
+      *          ESTE PROGRAMA CARGA UN ARCHIVO Y REALIZAMOS         *
       *           OPERACIONES SOBRE DICHO FICHERO                     *
       *****************************************************************
        IDENTIFICATION DIVISION.
-       PROGRAM-ID.    COBOL200.
+       PROGRAM-ID.    COBOL300.
       *
       *****************************************************************
       *                  ENVIROMENT DIVISION                          *
