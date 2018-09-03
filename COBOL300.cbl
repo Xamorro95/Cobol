@@ -1,10 +1,9 @@
       *****************************************************************
+      *           PROGRAMA DE MIGUEL ANTONIO CHAMORRO MARTINEZ        *
       *                                                               *
-      *       PROGRAMA DE MIGUEL ANTONIO CHAMORRO MARTINEZ            *
+      *  ESTE PROGRAMA CARGGA UN ARCHIVO Y REALIZAMOS OPERACIONES     *
+      *  SOBRE DICHO FICHERO SACANDO DOS FICHEROS DE SALIDA           *
       *                                                               *
-      *          ESTE PROGRAMA CARGGA UN ARCHIVO Y REALIZAMOS         *
-      *          OPERACIONES SOBRE DICHO FICHERO SACANDO DOS          *
-      *          FICHEROS DE SALIDA                                   *
       *****************************************************************
        IDENTIFICATION DIVISION.
        PROGRAM-ID.    COBOL300.
