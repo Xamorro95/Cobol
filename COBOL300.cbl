@@ -2,8 +2,9 @@
       *                                                               *
       *       PROGRAMA DE MIGUEL ANTONIO CHAMORRO MARTINEZ            *
       *                                                               *
-      *          ESTE PROGRAMA CARGA UN ARCHIVO Y REALIZAMOS         *
-      *           OPERACIONES SOBRE DICHO FICHERO                     *
+      *          ESTE PROGRAMA CARGGA UN ARCHIVO Y REALIZAMOS         *
+      *          OPERACIONES SOBRE DICHO FICHERO SACANDO DOS          *
+      *          FICHEROS DE SALIDA                                   *
       *****************************************************************
        IDENTIFICATION DIVISION.
        PROGRAM-ID.    COBOL300.
@@ -52,12 +53,12 @@
       *               VARIABLES  FICHERO ENTRADA                      *
       *****************************************************************
        COPY COPYEMPLE.
-       COPY COPYSALIDA1.
-       COPY COPYSALIDA2.
       *
       *****************************************************************
       *               VARIABLES  FICHERO SALIDA                       *
       *****************************************************************
+       COPY COPYSALIDA1.
+       COPY COPYSALIDA2.
       *
       *****************************************************************
       *               SWITCHES                                        *
@@ -178,6 +179,34 @@
       *             PROCESO                                           *
       *****************************************************************
        3000-PROCESO.
+      *LLAMAMOS AL PERFORM QUE EVALUA EL REGISTRO LEIDO
+           PERFORM 3100-EVALUACION
+              THRU 3100-EVALUACION-EXIT.
+      *
+      *LEE LA SIGUIENTE LINEA DEL FICHERO PRINCIPAL
+           READ FICHERO RECORD INTO WS-REG-EMPLEADO
+              AT END SET FIN-FICHERO TO TRUE.
+      *
+      *SI SE PRODUCE UN ERROR EN LA LECTURA ENVIA A PERFORM ERRORES
+           IF WS-FILE-STATUS = 00 or WS-FILE-STATUS=10
+                 CONTINUE
+           ELSE
+                MOVE 3000 TO WS-PARRAFO-ERROR
+                MOVE LT-READ TO WS-OPERACION-ERROR
+                MOVE WS-FILE-STATUS TO WS-FILE-STATUS-ERROR
+                PERFORM 9100-ERRORES
+                THRU 9100-ERRORES-EXIT
+           END-IF.
+      *AÑADE UNA LINEA AL CONTADOR PRINCIPAL
+           ADD 1 TO WC-CONTADOR.
+      *
+       3000-PROCESO-EXIT.
+       EXIT.
+      *
+      *****************************************************************
+      *            EVALUACION DE REGISTROS                            *
+      *****************************************************************
+*      3100-EVALUACION.
       *HACE UNA EVALUACION DE LOS DATOS Y MANDA A DOS SALIDAS DISTINTAS
       *EN CADA ENVIO, COMPRUEBA ERRORES
            EVALUATE TRUE
@@ -223,31 +252,15 @@
                       END-IF
                       ADD 1 TO WC-CONTADOR-EXIT2
            END-EVALUATE.
-      *
-      *LEE LA SIGUIENTE LINEA DEL FICHERO PRINCIPAL
-           READ FICHERO RECORD INTO WS-REG-EMPLEADO
-              AT END SET FIN-FICHERO TO TRUE.
-      *
-      *SI SE PRODUCE UN ERROR EN LA LECTURA ENVIA A PERFORM ERRORES
-           IF WS-FILE-STATUS = 00 or WS-FILE-STATUS=10
-                 CONTINUE
-           ELSE
-                MOVE 3000 TO WS-PARRAFO-ERROR
-                MOVE LT-READ TO WS-OPERACION-ERROR
-                MOVE WS-FILE-STATUS TO WS-FILE-STATUS-ERROR
-                PERFORM 9100-ERRORES
-                THRU 9100-ERRORES-EXIT
-           END-IF.
-      *AÑADE UNA LINEA AL CONTADOR PRINCIPAL
-           ADD 1 TO WC-CONTADOR.
-      *
-       3000-PROCESO-EXIT.
+       3100-EVALUACION-EXIT.
        EXIT.
       *
       *****************************************************************
       *             FIN                                               *
       *****************************************************************
        8000-FIN.
+      *SI NO SE PRODUCEN ERRORES DURANTE EL PROGRAMA MOSTRAMOS
+      *LAS ESTADISTICAS DEL MISMO
            IF NO-ERROR
                  DISPLAY "******************************************"
                  DISPLAY "      ESTADISTICAS DE PROGRAMA"
@@ -262,8 +275,7 @@
            CLOSE FICHERO.
            CLOSE SALIDA1.
            CLOSE SALIDA2.
-           DISPLAY "FICHERO CERRADO".
-           DISPLAY "FILE.STATUS: " WS-FILE-STATUS.
+           DISPLAY "FICHEROS CERRADOS".
            STOP RUN.
       *
        8000-FIN-EXIT.
@@ -291,6 +303,7 @@
                      DISPLAY "SE HA PRODUCIDO UN ERROR"
            END-EVALUATE.
       *
+      *MOSTRAMOS UN ANALISIS DEL ERROR PRODUCIDO
            DISPLAY "*********************************".
            DISPLAY "*********************************".
            DISPLAY "ANALISIS DE ERROR: ".
@@ -302,6 +315,7 @@
            DISPLAY "****OPERACION:   " WS-OPERACION-ERROR.
            DISPLAY "*********************************".
       *
+      *LLAMAMOS AL PERFORM QUE CIERRA EL PROGRAMA
            PERFORM 8000-FIN
               THRU 8000-FIN-EXIT.
       *
