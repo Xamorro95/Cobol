@@ -178,17 +178,6 @@
       *             PROCESO                                           *
       *****************************************************************
        3000-PROCESO.
-      *SI SE PRODUCE UN ERROR EN LA LECTURA ENVIA A PERFORM ERRORES
-           IF WS-FILE-STATUS = 00
-                 CONTINUE
-           ELSE
-                MOVE 3000 TO WS-PARRAFO-ERROR
-                MOVE LT-READ TO WS-OPERACION-ERROR
-                MOVE WS-FILE-STATUS TO WS-FILE-STATUS-ERROR
-                PERFORM 9100-ERRORES
-                THRU 9100-ERRORES-EXIT
-           END-IF.
-      *
       *HACE UNA EVALUACION DE LOS DATOS Y MANDA A DOS SALIDAS DISTINTAS
       *EN CADA ENVIO, COMPRUEBA ERRORES
            EVALUATE TRUE
@@ -239,6 +228,16 @@
            READ FICHERO RECORD INTO WS-REG-EMPLEADO
               AT END SET FIN-FICHERO TO TRUE.
       *
+      *SI SE PRODUCE UN ERROR EN LA LECTURA ENVIA A PERFORM ERRORES
+           IF WS-FILE-STATUS = 00 or WS-FILE-STATUS=10
+                 CONTINUE
+           ELSE
+                MOVE 3000 TO WS-PARRAFO-ERROR
+                MOVE LT-READ TO WS-OPERACION-ERROR
+                MOVE WS-FILE-STATUS TO WS-FILE-STATUS-ERROR
+                PERFORM 9100-ERRORES
+                THRU 9100-ERRORES-EXIT
+           END-IF.
       *AÑADE UNA LINEA AL CONTADOR PRINCIPAL
            ADD 1 TO WC-CONTADOR.
       *
@@ -281,7 +280,7 @@
            DISPLAY "************************************".
       *
       *EVALUAMOS EL TIPO DE ERROR Y LO MOSTRAMOS POR PANTALLA
-           EVALUATE WS-FILE-STATUS
+           EVALUATE WS-FILE-STATUS-ERROR
                 WHEN 04
                       DISPLAY "SE HA PRODUCIDO UN DESBORDAMIENTO"
                 WHEN 10
