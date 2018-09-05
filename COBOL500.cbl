@@ -142,12 +142,6 @@
            05  SW-ERRORES                        PIC X VALUE 0.
                 88 SI-ERROR                      VALUE "1".
                 88 NO-ERROR                      VALUE "0".
-           05  SW-HIGHVALUE-A                       PIC X VALUE 0.
-                88 SI-FIN-A                      VALUE "1".
-                88 NO-FIN-A                      VALUE "0".
-           05  SW-HIGHVALUE-B                       PIC X VALUE 0.
-                88 SI-FIN-B                      VALUE "1".
-                88 NO-FIN-B                      VALUE "0".
       *
       *****************************************************************
       *               CONSTANTES Y LITERALES                          *
@@ -385,7 +379,7 @@
            MOVE WS-REG-CRUCE-EMPLEADO TO WS-REG-SALIDA2.
       *
       *ESCRIBIMOS LA SALIDA EN EL FICHERO DE AMBOS Y COMPROBAMOS ERROR
-           WRITE REG-SALIDA3 FROM WS-REG-SALIDA2. 
+           WRITE REG-SALIDA3 FROM WS-REG-SALIDA2.
            IF WS-FILE-STATUS = 00
               CONTINUE
            ELSE
@@ -478,8 +472,7 @@
        9200-LEER-FICHEROA.
       *LEE UN REGISTRO DEL FICHERO A
            READ FICHEROA RECORD INTO WS-REG-EMPLEADO
-              AT END SET SI-FIN-A TO TRUE
-              MOVE HIGH-VALUE TO WS-REG-EMPLEADO.
+              AT END MOVE HIGH-VALUE TO WS-REG-EMPLEADO.
       *
       *SI SE PRODUCE UN ERROR EN LA LECTURA ENVIA A PERFORM ERRORES
            IF WS-FILE-STATUS = 00
@@ -503,7 +496,7 @@
       *AUMENTAMOS EN 1 EL CONTADOR DE REG LEIDOS DE FICHERO A SI NO FIN
               IF WS-REG-EMPLEADO = HIGH-VALUE
                  CONTINUE
-              ELSE    
+              ELSE
                  ADD 1 TO WC-CONTADOR-A
               END-IF
            END-IF.
@@ -516,8 +509,7 @@
        9300-LEER-FICHEROB.
       *LEE UN REGISTRO DEL FICHERO A
            READ FICHEROB RECORD INTO WS-REG-CRUCE-EMPLEADO
-              AT END SET SI-FIN-B TO TRUE
-              MOVE HIGH-VALUE TO WS-REG-CRUCE-EMPLEADO.
+              AT END MOVE HIGH-VALUE TO WS-REG-CRUCE-EMPLEADO.
       *
       *SI SE PRODUCE UN ERROR EN LA LECTURA ENVIA A PERFORM ERRORES
            IF WS-FILE-STATUS = 00
@@ -539,7 +531,7 @@
               SET FIN-FICHERO TO TRUE
            ELSE
       *AUMENTAMOS EN 1 EL CONTADOR DE REG LEIDOS DE FICHERO B SI NO FIN
-              IF WS-REG-CRUCE-EMPLEADO = HIGH-VALUE 
+              IF WS-REG-CRUCE-EMPLEADO = HIGH-VALUE
                  CONTINUE
               ELSE
                  ADD 1 TO WC-CONTADOR-B
