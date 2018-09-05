@@ -24,7 +24,12 @@
           3.13.- WRITE
           3.14.- SUBTRACT
           3.15.- MULTIPLY
-          3.16.- COMPUTE    
+          3.16.- COMPUTE 
+          3.17.- CALL
+       4.- RUTINAS
+          4.1.- LINKAGE SECTION
+          4.2.- PROCEDURE DIVISION
+          4.3.- GOBACK
    
    
 ****************************************************ENVIROMENT DIVISION***************************************************
@@ -109,3 +114,18 @@
 3.16.- COMPUTE    --> Permite realizar variables operaciones a la vez, recomendado uso de parentesis
                       Operadores --> +,-,*,/,** (exponencial)
                       COMPUTE campo_1 = campo_2 - campo_3 + campo_4...
+
+3.17.- CALL       --> Permite llamar a una rutina para que ejecute una tares. Tiene que compartir una zona de memoria con la misma
+                      estructura. 
+                      CALL LT_RUTINA USING area_memoria
+                      
+**********************************************************RUTINAS*********************************************************     
+
+4.1.- LINKAGE SECTION         --> Se coloca antes de la la PROCEDURE DIVISION y se define un area de memoria o COPY
+                                  LINKAGE SECTION.
+                                  COPY COPYRUTINA.
+                                  
+4.2.- PROCEDURE DIVISION      --> Se define directamente con el uso de un area de memoria.
+                                  PROCEDURE DIVISION USING 01_estructura
+                                  
+4.3.- GOBACK                  --> Termina la rutina y vuelve al programa principal
