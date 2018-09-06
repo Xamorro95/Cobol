@@ -7,10 +7,13 @@
           
       2.- WORKING-STORAGE SECTION
           2.1.-  COPY
+          2.2.- OCCURS
           
       3.- ROCEDURE DIVISION
           3.1.-  MOVE
           3.2.-  ACCEPT
+                 3.2.1.- DATE
+                 3.2.2.- SYSIN
           3.3.-  DISPLAY
           3.4.-  INITIALIZE
           3.5.-  ADD
@@ -26,6 +29,8 @@
           3.15.- MULTIPLY
           3.16.- COMPUTE 
           3.17.- CALL
+          3.18.- REDEFINES
+          
        4.- RUTINAS
           4.1.- LINKAGE SECTION
           4.2.- PROCEDURE DIVISION
@@ -52,14 +57,21 @@
                       REPLACING --> Permite coger una cadena de la copy y transformala por otra
                       COPY ficherocopy_1 [REPLACING ==cadena_1== BY ==cadena_2==]
 
+2.2.- OCCURS      --> Permite repetir varias veces una variable (tablas)
+                      OCCURS n_veces TIMES --> indica cuantas veces se repite
+                      [ASCENDING|DESCENDING] KEY IS WT-CODIGO-DEPART --> Indica un campo key.
+                      INDEXED BY campo. --> Genera un indice
+
 
 ****************************************************PROCEDURE DIVISION****************************************************
 
 3.1.-MOVE         --> Mueve el contenido de una variable a otra.
                       MOVE variable_1 TO variable_2
 
-3.2.-ACCEPT       -->   0.2.0.- DATE      --> Para sacar la fecha del sistema. 
+3.2.-ACCEPT       -->   3.2.1.- DATE      --> Para sacar la fecha del sistema. 
                                               ACCEPT variable_1 FROM DATE [YYYYMMDD]
+                        3.2.2.- SYSIN     --> Para pedir una cadena por pantalla
+                                              ACCEPT variable_1 FROM SYSIN.
 
 3.3.-DISPLAY      --> Muestra por pantalla la sentencia indicada.
                       DISPLAY variable_1
@@ -118,6 +130,11 @@
 3.17.- CALL       --> Permite llamar a una rutina para que ejecute una tares. Tiene que compartir una zona de memoria con la misma
                       estructura. 
                       CALL LT_RUTINA USING area_memoria
+                      
+3.18.- REDEFINES  --> Permite redefinir una variable con el contenido de otra. Tiene que definirse en el mismo nivel de la variable
+                      que vamos a redefinir y seguida, sin variables de por medio.
+                      05 WS-variable_1      PIC X(3).
+                      05 WS_variable2       REDEFINES WS_variable_1.    
                       
 **********************************************************RUTINAS*********************************************************     
 
